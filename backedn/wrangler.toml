@@ -1,0 +1,23 @@
+name = "backedn"
+main = "src/index.ts"
+compatibility_date = "2024-10-01"
+compatibility_flags = [ "nodejs_compat" ]
+
+[vars]
+DATABASE_URL="prisma://accelerate.prisma-data.net/?api_key=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcGlfa2V5IjoiZDVkNDk4YjgtMzE0ZS00OWFkLTk3ODktNzUzNmFmZmE2ZjU3IiwidGVuYW50X2lkIjoiNTczZjZlNWViYmNiMmJmYzFhNjU4ZWViNjJjYjY2OGE1MDZjNzhlMWRjYjU5ODE4ODBjMjZiYzc4ZGYxOGMwNyIsImludGVybmFsX3NlY3JldCI6ImI2YThmZTFkLTNlMDctNDkzZC04OGEwLTVkN2Y2YzhhNTg2YSJ9.8yNe2fk3yOjSr743f4NxFp-a5p8TeewVpe4qxG4COaA"
+
+# [[kv_namespaces]]
+# binding = "MY_KV_NAMESPACE"
+# id = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+
+# [[r2_buckets]]
+# binding = "MY_BUCKET"
+# bucket_name = "my-bucket"
+
+# [[d1_databases]]
+# binding = "DB"
+# database_name = "my-database"
+# database_id = ""
+
+# [ai]
+# binding = "AI"

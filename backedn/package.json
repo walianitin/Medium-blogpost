@@ -1,0 +1,19 @@
+{
+  "name": "backedn",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy --minify"
+  },
+  "dependencies": {
+    "@nitinwalia00/blog-common": "^1.0.0",
+    "@prisma/client": "^5.20.0",
+    "@prisma/extension-accelerate": "^1.2.0",
+    "cors": "^2.8.5",
+    "hono": "^4.6.3",
+    "prisma": "^5.20.0"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20240529.0",
+    "wrangler": "^3.57.2"
+  }
+}
