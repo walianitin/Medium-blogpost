@@ -1,41 +1,63 @@
+import { useState, ChangeEvent } from "react";
 import Bottom from "../components/Bottom";
 import Button from "../components/Button";
 import Heading from "../components/Heading";
 import Input from "../components/Input";
-import Quotes from "../components/Quotes"; // Quotes component needs to have a heading and subheading prop
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
-function buttonClick   () {
-    alert("Button clicked");
+function buttonClick(password: string,navigate:any) {
+    // Store password in localStorage (avoid in production)
+    const response = await axios.post(`${BACKEND_URL}/api/v1/user/signup`, postInputs);
+    localStorage.setItem("password", password);
+    alert("Logged in successfully!")
+    navigate("/blog")
 }
 
-export default function Signin() {
-    connst 
-    return (
-    <div className="justify-between mx-2 ">
-        <div className="flex flex-row items-center">
-            {/* Left Side: Form */}
-            <div className="flex flex-col p-12 rounded-lg w-1/2">
-                <div className="mb-6  flex flex-col items-center justify-center ">
-                    <Heading label="Login " ></Heading>
-                        <div className="flex flex-row p-1"> <Bottom label="Create an account?" linktext="Signup" to="/signup"></Bottom></div>
-                 </div>
-               
-                {/* <Input label="Username" placeholder="Enter your username"  ></Input> */}
-                <Input label="Email" placeholder="m@example.com" ></Input>
-                <Input label="Password" placeholder="Enter your password"></Input>
-               
-               <div className="p-3"><Button label="Sign In" onClick={buttonClick}></Button></div>
-            </div>
+export default function Signup() {
+    const navigate =useNavigate();
+    const [password, setPassword] = useState("");
 
-            {/* Right Side: Quote */}
-            <div className=" flex items-center justify-center w-1/2 bg-slate-200 h-screen shadow-md p-4 text-center text-2xl italic">
-                <Quotes 
-                    heading="“The customer service I received was exceptional. The support team went above and beyond to address my concerns.”" 
-                    subHeading="Jules Winnfield, CEO, Acme Inc"
-                    className="text-center text-lg"
-                    />
+    const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+        setPassword(e.target.value);
+    };
+
+    const handleButtonClick = () => {
+        if (!password) {
+            alert("Password is required.");
+            return;
+        }
+        buttonClick(password,navigate);
+    };
+
+    return (
+        <div className="flex items-center justify-center min-h-screen bg-gray-100">
+            <div className="bg-white shadow-lg rounded-lg p-8 max-w-md w-full">
+                <div className="flex flex-col items-center">
+                    <Heading label="Login to Account"></Heading>
+                    <div className="mt-4 flex">
+                        <Bottom label="Don't have an account?" linktext="Signup" to="/signup"></Bottom>
+                    </div>
+                </div>
+
+                <div className="mt-6">
+                <Input
+                        label="Name"
+                        placeholder="Enter your Name"
+                        type="text"
+                        onChange={handleInputChange}
+                    ></Input>
+                    <Input
+                        label="Password"
+                        placeholder="Enter your password"
+                        type="password"
+                        onChange={handleInputChange}
+                    ></Input>
+                </div>
+                <div className="mt-6">
+                    <Button label="Sign In" onClick={handleButtonClick}></Button>
+                </div>
             </div>
         </div>
-    </div>
     );
 }

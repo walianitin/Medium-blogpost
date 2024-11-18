@@ -28,6 +28,12 @@ userRouter.post('/signup', async (c)=>
         }).$extends(withAccelerate())
 
         try{
+            const existing_user = await prisma.user.findFirst({
+                where: {
+                    email:body.email
+                },
+            });
+            if(existing_user) return c.text("user already exists ,try with another email")
             const user=await prisma.user.create({
                 data:{
                         email:body.email,
@@ -35,8 +41,7 @@ userRouter.post('/signup', async (c)=>
                         password:body.password
                     }
                 })
-
-           
+               
             const jwt = await sign({
                 id: user.id
               }, "NITIN_WALIA");
@@ -54,6 +59,12 @@ userRouter.post('/signin',async (c)=>
 {
     const body =await c.req.json(); 
     const {success}=signinInput.safeParse(body);
+    // const existing_user = await prisma.user.findFirst({
+    //     where: {
+    //         email:body.email,
+    //     },
+    // });
+    // if(!existing_user) return c.text("user does not exits ,try signup")
 
     if(!success) 
     {
