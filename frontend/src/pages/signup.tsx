@@ -4,17 +4,16 @@ import Button from "../components/Button";
 import Heading from "../components/Heading";
 import Input from "../components/Input";
 import Quotes from "../components/Quotes"; // Quotes component needs to have a heading and subheading prop
-import { signupInput} from "@nitinwalia00/common"
-import { string } from "zod";
-function buttonClick() {
-    alert("Button clicked");
-}
+import { Navigate } from "react-router-dom";
+import {BACKEND_URL} from "../../config"
+import axios from "axios";
+
 
 interface labeleedinput{
     label:string,
     placeholder:string,
     onChange: (e:ChangeEvent<HTMLInputElement>)=>void;
-    type?:string
+    type?:string 
 }
 
 export default function Signup() {
@@ -23,11 +22,22 @@ export default function Signup() {
         password:"",
         email:""  
     }) 
-    return (  
+     async function buttonClick(){
+        try{
+            const response = await axios.post(`${BACKEND_URL}/api/v1/user/signup`, postInputs);
 
+                const jwt=response.data;
+                localStorage.setItem("jwt",jwt);
+                Navigate("/blogs")
+        }catch(e){
+            alert("error in the request");
+    
+        }
+    }
+    
+    return (  
     <div className="justify-between mx-2 ">
         <div className="flex flex-row items-center">
-            {/* Left Side: Form */}
             <div className="flex flex-col p-12 rounded-lg w-1/2">
                 <div className="mb-6  flex flex-col items-center justify-center ">
                     <Heading label="Create an account" ></Heading>
@@ -40,9 +50,18 @@ export default function Signup() {
                             name:e.target.value
                         })
                 }}></Input>
-                <Input label="Email" placeholder="m@example.com" ></Input>
-                <Input label="Password" placeholder="Enter your password" type="password">  </Input>
-               
+                <Input label="Email" placeholder="m@example.com"  onChange={(e)=>{
+                    setpostInputs({
+                          ...postInputs,
+                        email:e.target.value
+                    })
+                }} ></Input>
+                <Input label="Password" placeholder="Enter your password" type="Password" onChange={(e)=>{
+                    setpostInputs({
+                        ...postInputs,
+                        password:e.target.value
+                    })
+                }}>  </Input> 
                <div className="p-3"><Button label="Sign Up" onClick={buttonClick}></Button></div>
             </div>
 

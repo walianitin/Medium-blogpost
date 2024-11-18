@@ -16,8 +16,13 @@ export const  blogRouter= new Hono<{
 blogRouter.use("/*", async (c,next )=>
 {
     const authHeader = c.req.header("Authorization") || "";
+    if(!authHeader)return c.json({
+        // token:authHeader,
+        message:"  did not get the token"
+    }) 
     try{
         const user = await verify(authHeader, "NITIN_WALIA");
+        
         if(user)
         {
             //@ts-ignore
