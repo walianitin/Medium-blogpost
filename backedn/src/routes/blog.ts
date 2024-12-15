@@ -134,8 +134,13 @@ blogRouter.get('/bulk', async (c) => {
 })
 
 
-blogRouter.put('/', async (c) => {
+blogRouter.put('/update', async (c) => {
     const body = await c.req.json();
+    const post_id= c.req.param("id")
+   
+   // console.log(body);
+   // console.log(post_id);
+   console.log("Post ID:", post_id);
     const { success } = updatePostInput.safeParse(body);
     if (!success) {
         c.status(411);
@@ -143,14 +148,17 @@ blogRouter.put('/', async (c) => {
             message: "Inputs not correct"
         })
     }
-
+try{
     const prisma = new PrismaClient({
       datasourceUrl: c.env.DATABASE_URL,
     }).$extends(withAccelerate())
+    if (!post_id) {
+    throw new Error("  Post ID is missing or invalid");
+    }
 
     const post = await prisma.post.update({
         where: {
-            id: body.id
+            id:post_id
         }, 
         data: {
             title: body.title,
@@ -159,7 +167,15 @@ blogRouter.put('/', async (c) => {
     })
 
     return c.json({
-        id: post.id,
+        id: post.id, 
         message:"update are successfully done"
-    })
+    })}catch(err:any)
+    {
+        console.error('Error during post update:', err);
+        c.status(500);
+        return c.json({
+            message: "Something went wrong, unable to update the post.",
+            error:err.message,  // Optionally send the error message
+        });
+    }
 })
