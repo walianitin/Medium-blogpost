@@ -1,79 +1,59 @@
-import { useState } from "react";
-import Bottom from "../components/Bottom";
-import Button from "../components/Button";
-import Heading from "../components/Heading";
-import Input from "../components/Input";
-import Quotes from "../components/Quotes"; // Quotes component needs to have a heading and subheading prop
-import { Navigate } from "react-router-dom";
+import { useState } from "react"
+import Input from "../components/label_Input"
+import axios from "axios"
 import {BACKEND_URL} from "../../config"
-import axios from "axios";
-
-
-interface labeleedinput{
-    label:string,
-    placeholder:string,
-    onChange: (e:ChangeEvent<HTMLInputElement>)=>void;
-    type?:string 
-}
-
-export default function Signup() {
-    const [postInputs,setpostInputs]=useState({ 
-        name:"",
-        password:"",
-        email:""  
-    }) 
-     async function buttonClick(){
-        try{
-            const response = await axios.post(`${BACKEND_URL}/api/v1/user/signup`, postInputs);
-
-                const jwt=response.data;
-                localStorage.setItem("jwt",jwt);
-                Navigate("/blogs")
-        }catch(e){
-            alert("error in the request");
-    
+import { toast,Toaster} from "sonner"
+export  default function Signup(){
+    const [data,setdata]=useState<Signupinput>(
+        {
+            name:"",
+            email: "",
+		    password: "",
         }
+    )
+async function sendRequest() {
+    try{
+        const response =await axios.post(`${BACKEND_URL}/api/v1/user/signup`,data);
+        const jwt= response.data.jwt;
+        localStorage.setItem("token", jwt);
+        if(response.data.jwt!=null) {
+            const success_message="login successfully";
+            toast.success(success_message);
+        }
+    }catch(error:any){
+        console.warn(error);
+			const errorMessage =
+				error.response?.data?.message ?? "Invalid Inputs";
+			toast.warning(errorMessage, {
+				duration: 2000,
+			});
     }
-    
-    return (  
-    <div className="justify-between mx-2 ">
-        <div className="flex flex-row items-center">
-            <div className="flex flex-col p-12 rounded-lg w-1/2">
-                <div className="mb-6  flex flex-col items-center justify-center ">
-                    <Heading label="Create an account" ></Heading>
-                        <div className="flex flex-row p-1"> <Bottom label="Already have an account?" linktext="Login" to="/signin"></Bottom></div>
-                 </div>
-               
-                <Input label="Username" placeholder="Enter your username" onChange={(e)=>{
-                        setpostInputs({
-                            ...postInputs,
-                            name:e.target.value
-                        })
+} 
+return <div>
+    {JSON.stringify(data)}
+        <div className="flex justify-center h-screen bg-slate-300">
+            <div className="flex flex-col justify-center ">
+                <div className="text-center m-30 text-xl font-bold"> Signup </div>
+                <div className=" w-80 p-2 h-max px-4 text-center bg-white rounded-lg">
+                <Input placeholder={"joe"} label={"firstName"}  type={"text"}    onChange={(e) => {
+                    console.log("Input onChange triggered:", e.target.value);
+                    onChange?.(e);
                 }}></Input>
-                <Input label="Email" placeholder="m@example.com"  onChange={(e)=>{
-                    setpostInputs({
-                          ...postInputs,
-                        email:e.target.value
-                    })
-                }} ></Input>
-                <Input label="Password" placeholder="Enter your password" type="Password" onChange={(e)=>{
-                    setpostInputs({
-                        ...postInputs,
-                        password:e.target.value
-                    })
-                }}>  </Input> 
-               <div className="p-3"><Button label="Sign Up" onClick={buttonClick}></Button></div>
-            </div>
+                <Input placeholder={"joe@gmail.com"} label={"Email"}  type={"text"}  onChange={(e) => setdata((prev) => ({ ...prev, email: e.target.value }))}></Input>
+                <Input placeholder={"***"} label={"password"}  type={"password"}  onChange={(e) => setdata((prev) => ({ ...prev, password: e.target.value }))}></Input>
 
-            {/* Right Side: Quote */}
-            <div className=" flex items-center justify-center w-1/2 bg-slate-200 h-screen shadow-md p-4 text-center text-2xl italic">
-                <Quotes 
-                    heading="“The customer service I received was exceptional. The support team went above and beyond to address my concerns.”" 
-                    subHeading="Jules Winnfield, CEO, Acme Inc"
-                    className="text-center text-lg"
-                    />
+                <button className="mt-5 text-white  bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700" onClick={sendRequest}> signup</button>
+                </div>
             </div>
         </div>
-    </div>
-    );
+</div>
+}
+
+
+
+
+interface Signupinput{
+    name:string,
+    email:string,
+    password:string
 }
