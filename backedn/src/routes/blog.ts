@@ -3,6 +3,13 @@ import { PrismaClient } from '@prisma/client/edge'
 import { withAccelerate } from '@prisma/extension-accelerate'
 import { verify } from "hono/jwt";
 import {createPostInput,updatePostInput} from "../../../common/dist/index"
+import { rateLimiter } from "hono-rate-limiter";
+const rate_limit = rateLimiter({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    limit: 1, 
+    standardHeaders: "draft-6", // draft-6: `RateLimit-*` headers; draft-7: combined `RateLimit` header
+    keyGenerator: (c) => "<unique_key>", // Method to generate custom identifiers for clients.
+});
 export const  blogRouter= new Hono<{
     Bindings:{
         DATABASE_URL:string
@@ -13,7 +20,7 @@ export const  blogRouter= new Hono<{
         userId:string
     }
 }>()
-blogRouter.use("/*", async (c,next )=>
+blogRouter.use("/*", async (c,next:any )=>
 {
     const authHeader = c.req.header("Authorization") || "";
     if(!authHeader)return c.json({
@@ -37,7 +44,7 @@ blogRouter.use("/*", async (c,next )=>
         }
     }catch(err)
     {
-        console.log(err);
+        // console.log(err);
         return c.json({
             message:"error in the middleware"
         })
@@ -45,7 +52,7 @@ blogRouter.use("/*", async (c,next )=>
 })
 
 
-blogRouter.post('/post',async(c)=>
+blogRouter.post('/post',rate_limit,async(c)=>
 {
     const body= await c.req.json();
     const {success} =createPostInput.safeParse(body);
@@ -104,7 +111,7 @@ blogRouter.get('/user_post',async (c)=>
         })
         return c.json({post})
     }catch(e) {
-        c.status(411); // 4
+        c.status(411); //
         return c.json({
             message: "Error while fetching blog post"
         });
