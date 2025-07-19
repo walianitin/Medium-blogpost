@@ -1,1 +1,1 @@
- export const BACKEND_URL="https://backedn.walianitin406.workers.dev/"
+ export const BACKEND_URL="http://localhost:8787"

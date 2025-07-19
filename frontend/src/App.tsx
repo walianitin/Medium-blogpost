@@ -1,15 +1,17 @@
-import { BrowserRouter ,Routes,Route} from "react-router-dom"
-import Signup from "./pages/signup"
+import { BrowserRouter ,Route,Routes} from "react-router-dom"
+import SignIn from "./components/signin"
+import SignUp from "./components/Signup"
+import DashBoard from "./components/pages/DashBord"
 function App() {
 
   return (
     <>
     <BrowserRouter>
-    <Routes>
-    <Route path="/signup" element={<Signup></Signup>}/>
-    {/* <Route path="/signin" element={<Signin/>}></Route> */}
-    {/* <Route path="/blog" element={<Blogs/>}></Route> */}
-    </Routes>
+      <Routes>
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/signin" element={<SignIn />} />
+        <Route path="/home" element={<DashBoard />} />
+      </Routes>
     </BrowserRouter>
     </>
 

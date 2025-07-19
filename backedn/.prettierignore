@@ -1,0 +1,9 @@
+node_modules/
+dist/
+build/
+.wrangler/
+prisma/migrations/
+*.log
+.env
+package-lock.json
+wrangler.toml
