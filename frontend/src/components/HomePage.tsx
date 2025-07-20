@@ -1,7 +1,7 @@
-import { useNavigate } from "react-router-dom"
+
 
 export default function Home() {
-    const navigate = useNavigate()
+  
     
     return (
         <div className="flex justify-center h-screen pt-12 bg-[#FFFDF6]">
