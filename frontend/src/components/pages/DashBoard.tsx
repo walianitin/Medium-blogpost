@@ -3,7 +3,7 @@ import axios from 'axios';
 import Content from '../Content';
 import {Blog} from '../../utils/types'
 
-const backend_url = " http://localhost:8787"
+const backend_url = " https://backedn.walianitin406.workers.dev"
 
 export default function DashBoard() {
     const [blogs, setblogs] = useState<Blog[]>([]);
