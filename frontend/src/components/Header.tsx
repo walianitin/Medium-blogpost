@@ -4,9 +4,9 @@ import { useNavigate } from "react-router-dom";
 export default function Header() {
   const navigate = useNavigate();
   return (
-    <div className="bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between">
-      <div className="flex items-center">
-        <img src="/company.jpeg" alt="logo" height={70} width={30} className="rounded-md" />
+    <div className=" bg-[#F2F2F2] border-blue-800  px-6 py-4 flex items-center justify-between  sticky  top-0 z-50 bg-origin-border ">
+      <div className="flex items-center ">
+        <span className=" text-nowrap text-4xl w-fit h-30rem  font-bold font-serif cursor-pointer" onClick={()=>navigate("")}>Medium </span>
       </div>
       <span className="  flex flex-row gap-10 p-3 rounded-xl shadow-gray-300 "> 
 

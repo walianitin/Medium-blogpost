@@ -21,12 +21,16 @@ export default function DashBoard() {
     console.log(blogs);
     if(!blogs) return <div>Loading...</div>;
     return (
+        <div className=' w-screen bg-gradient-to-br from-gray-50 to-white '>
+
          <div className='bg-gradient-to-br from-gray-50 to-white min-h-screen px-4 py-8 max-w-4xl mx-auto'>
-            <div className='space-y-6'>
+            <div className='space-y-6 cursor-pointer'>
                 {blogs.map((data, index) => {
                     return <Content data={data} key={data.key || index} ></Content>
                 })}
+
             </div>
+        </div>
         </div>
     );
 }
