@@ -2,7 +2,9 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Content from '../components/Content';
-import Loader from '../components/Loader';
+import Header from '../components/Header';
+import { Skeleton } from '../components/ui/skeleton';
+
 
 interface Author {
     name: string;
@@ -21,6 +23,7 @@ const backend_url = "https://backedn.walianitin406.workers.dev";
 export default function DashBoard() {
     const [blogs, setBlogs] = useState<Blog[]>([]);
     const [loading, setLoading] = useState(true);
+    const [Loader,setloader]=useState(true);
     const [error, setError] = useState('');
     const navigate = useNavigate();
 
@@ -61,12 +64,24 @@ export default function DashBoard() {
         fetchBlogs();
     }, [navigate]);
 
-    if (loading) return <Loader />;
-
-    return (
-        <div className="w-screen bg-gradient-to-br from-gray-50 to-white min-h-screen">
-            
-            <div className="max-w-4xl mx-auto px-4 py-8">
+    setTimeout(() => {
+        setloader(false)
+    }, 3000);
+    return Loader ? (
+        <>
+             
+         <div className="flex items-center scale-110 gap-3  justify-center h-screen ">
+      <Skeleton className="h-12 w-12 rounded-full bg-slate-300" />
+      <div className="space-y-2">
+        <Skeleton className="h-4 w-[250px] bg-slate-300" />
+        <Skeleton className="h-4 w-[200px] bg-slate-300" />
+      </div>
+    </div>
+        </>
+    ) : (
+        <div className="w-screen min-h-screen bg-gradient-to-l from-white via-blue-100 to-white">
+             <Header></Header>
+            <div className="max-w-5xl rounded-lg p-2 translate-y-5  mx-auto px-4 py-8  bg-gradient-to-b from-white via-blue-100 to-white">
                 <div className="mb-8">
                     <h1 className="text-3xl font-bold text-gray-900 mb-2">Explore Stories</h1>
                     <p className="text-gray-600">Discover amazing stories from our community</p>
@@ -107,3 +122,4 @@ export default function DashBoard() {
         </div>
     );
 }
+

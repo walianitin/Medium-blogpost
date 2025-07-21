@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react"
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
-
+import Header from "../components/Header"
 interface BlogPost {
     title: string;
     content: string;
@@ -83,9 +83,10 @@ export default function Write() {
         }
     }
 
-    return (
+    return (<>
+             <Header></Header>
         <div className="min-h-screen bg-gradient-to-b from-white via-blue-100 to-white px-4 py-8">
-            <div className="max-w-4xl mx-auto bg-white-200 bg-transparent  opacity-90 items-center justify-center mt-20 rounded-md p-10">
+            <div className="max-w-4xl mx-auto bg-white-200 bg-transparent  opacity-90 items-center justify-center mt-20 rounded-md p-10 border-2 border-r-3 border-blue-200 ">
                
                 <div className="mb-4">
                     <h1 className="text-3xl font-thin text-gray-900 mb-2">Write a New Story</h1>
@@ -101,7 +102,7 @@ export default function Write() {
                         onChange={(e) => setBlogPost(prev => ({ ...prev, title: e.target.value }))}
                         className="w-full text-4xl font-bold placeholder-gray-400 bg-transparent border-none outline-none resize-none py-4 text-gray-900"
                         style={{ border: 'none', boxShadow: 'none' }}
-                    />
+                        />
                 </div>
 
                 {/* Content Textarea - Auto-expanding */}
@@ -122,7 +123,7 @@ export default function Write() {
                             height: 'auto'
                         }}
                         rows={1}
-                    />
+                        />
                 </div>
 
                 {/* Action Buttons */}
@@ -130,7 +131,7 @@ export default function Write() {
                     <button
                         onClick={() => navigate("/")}
                         className="px-6 py-2 text-gray-200 bg-[#3f3f46] rounded-full transition-colors duration-200"
-                    >
+                        >
                         Cancel
                     </button>
                     
@@ -139,14 +140,15 @@ export default function Write() {
                         disabled={isLoading || isSubmitting || !blogPost.title.trim() || !blogPost.content.trim()}
                         className={`px-8 py-3 rounded-full font-medium transition-all duration-200 ${
                             isLoading || isSubmitting || !blogPost.title.trim() || !blogPost.content.trim()
-                                ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                                : 'bg-blue-600 text-white hover:bg-blue-700 hover:scale-105 shadow-md hover:shadow-lg'
+                            ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                            : 'bg-blue-600 text-white hover:bg-blue-700 hover:scale-105 shadow-md hover:shadow-lg'
                         }`}
-                    >
+                        >
                         {isLoading || isSubmitting ? 'Publishing...' : 'Publish'}
                     </button>
                 </div>
             </div>
         </div>
+                        </>
     )
 }
