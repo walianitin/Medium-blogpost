@@ -7,7 +7,7 @@ interface BlogPost {
     content: string;
 }
 
-const backend_url = "http://localhost:8787"
+const backend_url = "https://backedn.walianitin406.workers.dev"
 
 export default function Write() {
     const [blogPost, setBlogPost] = useState<BlogPost>({
@@ -15,8 +15,22 @@ export default function Write() {
         content: ""
     })
     const [isLoading, setIsLoading] = useState(false)
+    const [isSubmitting, setIsSubmitting] = useState(false)
     const navigate = useNavigate()
     const textareaRef = useRef<HTMLTextAreaElement>(null)
+
+    const getAuthHeader = () => {
+        const token = localStorage.getItem('authToken');
+        return token ? token : '';
+    };
+
+    // Check authentication on component mount
+    useEffect(() => {
+        const token = localStorage.getItem('authToken');
+        if (!token) {
+            navigate('/signin');
+        }
+    }, [navigate]);
 
     // Auto-resize textarea function
     const autoResize = () => {
@@ -33,36 +47,46 @@ export default function Write() {
     }, [blogPost.content])
 
     const handleSubmit = async () => {
+        // Prevent double submission
+        if (isSubmitting || isLoading) {
+            return
+        }
+
         if (!blogPost.title.trim() || !blogPost.content.trim()) {
             alert("Please fill in both title and content")
             return
         }
 
+        setIsSubmitting(true)
         setIsLoading(true)
         try {
-            const response = await axios.post(`${backend_url}/api/v1/blog`, blogPost, {
+            const authHeader = getAuthHeader();
+            const response = await axios.post(`${backend_url}/api/v1/blog/post`, blogPost, {
                 headers: {
-                    Authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjdmODEyZmIxLTRiN2QtNGQ5YS05ZDM5LTUwZTYxOGUwMjJlYyJ9.48hgGmXwUyzsVBXxsns43oyNnavc1hGPmv3m8zUKUt0",
+                    Authorization: authHeader,
                     "Content-Type": "application/json"
                 }
             })
+          
             
             if (response.status === 200 || response.status === 201) {
                 alert("Blog post created successfully!")
-                navigate("/home")
+                setBlogPost({ title: "", content: "" }) // Clear form
+                navigate("/")
             }
         } catch (error) {
             console.error("Error creating blog post:", error)
             alert("Failed to create blog post. Please try again.")
         } finally {
             setIsLoading(false)
+            setIsSubmitting(false)
         }
     }
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-gray-50 to-white px-4 py-8">
-            <div className="max-w-4xl mx-auto">
-                {/* Header */}
+        <div className="min-h-screen bg-gradient-to-b from-white via-blue-100 to-white px-4 py-8">
+            <div className="max-w-4xl mx-auto bg-white-200 bg-transparent  opacity-90 items-center justify-center mt-20 rounded-md p-10">
+               
                 <div className="mb-4">
                     <h1 className="text-3xl font-thin text-gray-900 mb-2">Write a New Story</h1>
                     <p className="text-gray-600 font-extralight">Share your thoughts with the world</p>
@@ -104,22 +128,22 @@ export default function Write() {
                 {/* Action Buttons */}
                 <div className="flex justify-between items-center">
                     <button
-                        onClick={() => navigate("/home")}
-                        className="px-6 py-2 text-gray-600 hover:text-gray-800 transition-colors duration-200"
+                        onClick={() => navigate("/")}
+                        className="px-6 py-2 text-gray-200 bg-[#3f3f46] rounded-full transition-colors duration-200"
                     >
                         Cancel
                     </button>
                     
                     <button
                         onClick={handleSubmit}
-                        disabled={isLoading || !blogPost.title.trim() || !blogPost.content.trim()}
+                        disabled={isLoading || isSubmitting || !blogPost.title.trim() || !blogPost.content.trim()}
                         className={`px-8 py-3 rounded-full font-medium transition-all duration-200 ${
-                            isLoading || !blogPost.title.trim() || !blogPost.content.trim()
+                            isLoading || isSubmitting || !blogPost.title.trim() || !blogPost.content.trim()
                                 ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                                : 'bg-green-600 text-white hover:bg-green-700 hover:scale-105 shadow-md hover:shadow-lg'
+                                : 'bg-blue-600 text-white hover:bg-blue-700 hover:scale-105 shadow-md hover:shadow-lg'
                         }`}
                     >
-                        {isLoading ? 'Publishing...' : 'Publish'}
+                        {isLoading || isSubmitting ? 'Publishing...' : 'Publish'}
                     </button>
                 </div>
             </div>

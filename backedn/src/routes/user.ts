@@ -80,7 +80,7 @@ const prisma = new PrismaClient().$extends(withAccelerate())
         password: body.password,
       },
     })
-    console.log("reached here")
+
     if (!user) {
       c.status(403)
       return c.json({

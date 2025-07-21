@@ -1,9 +1,0 @@
-{
-  "name": "backedn",
-  "compatibility_date": "2025-07-19",
-  "compatibility_flags": ["nodejs_compat"],
-  "main": "src/index.ts",
-  "vars": {
-    "DATABASE_URL": "prisma://accelerate.prisma-data.net/?api_key=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqd3RfaWQiOjEsInNlY3VyZV9rZXkiOiJza19MWDQxR3pQdkIxRjVaNzNlRi0zOXgiLCJhcGlfa2V5IjoiMDFLMEZaVzIxMEJTNkpXN0dSWVI0NlNESkMiLCJ0ZW5hbnRfaWQiOiIwNWVmYzEyOTY3ODllZjBlM2FhNmQxMWY4ZTJiYjY2MTIzNzg5OTNhNGYyMThjNDJiMmZlODE3YzEyNjA0NjEyIiwiaW50ZXJuYWxfc2VjcmV0IjoiZDcwMjJmMjMtOGEwOS00YTZlLThhNmMtY2QzOGJjNjUwOGI0In0.TUdU_frkhn72W2O8BSCe8P1rSma8jGGUWWFnmF_rX8A"
-  }
-}

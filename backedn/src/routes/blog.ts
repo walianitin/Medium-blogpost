@@ -3,7 +3,6 @@ import { PrismaClient } from '@prisma/client/edge'
 import { withAccelerate } from '@prisma/extension-accelerate'
 import { verify } from 'hono/jwt'
 import { createPostInput, updatePostInput } from '../../../common/dist/index'
-
 // const rate_limit = rateLimiter({
 //   windowMs: 15 * 60 * 1000, // 15 minutes
 //   limit: 1,
@@ -21,6 +20,7 @@ export const blogRouter = new Hono<{
 }>()
 blogRouter.use('/*', async (c, next: any) => {
   const authHeader = c.req.header('Authorization') || ''
+  console.log(c.req.header)
   if (!authHeader)
     {return c.json({
       // token:authHeader,

@@ -1,16 +1,54 @@
 import Herosection from "./HeroSection";
-import {Blog } from "../utils/types";
 
-interface ContentProps {
-    data: Blog;
+interface Blog {
+    url: string;
+    author: string;
+    title: string;
+    content: string;
 }
 
-export default function Content({ data }: ContentProps) {
-    return <div className="bg-white border border-gray-200 rounded-lg m-2 p-4 shadow-sm hover:shadow-md  hover:-translate-y-8 hover:gap-4 hover:scale-105  duration-300 transition-all cursor-pointer">
-        <Herosection Avatar_url={data.url} author_name={data.author.name}></Herosection>
-        <span className="flex flex-col justify-center items-start gap-1 "> 
-            <h1 className=" font-bold hover:text-blue-600 hover:scale-105 transition-all duration-200"> {data.title}</h1>
-            <p className="hover:text-gray-700 transition-all duration-200"> {data.content}</p>
-        </span>
-    </div>
+export default function Content(data: Blog) {
+    // Handle potential missing data
+    const safeData = {
+        url: data?.url || "",
+        author: data?.author || "Unknown Author",
+        title: data?.title || "Untitled",
+        content: data?.content || "No content available"
+    };
+
+    return (
+        <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 p-6 border border-gray-200">
+            <Herosection Avatar_url={safeData.url} author_name={safeData.author} />
+            
+            <div className="mt-4 space-y-3">
+                <h1 className="text-xl font-bold text-gray-900 leading-tight hover:text-blue-600 transition-colors duration-200">
+                    {safeData.title}
+                </h1>
+                
+                <p className="text-gray-600 leading-relaxed line-clamp-3">
+                    {safeData.content.length > 150 
+                        ? `${safeData.content.substring(0, 150)}...` 
+                        : safeData.content
+                    }
+                </p>
+                
+                <div className="flex justify-between items-center pt-2">
+                    <span className="text-sm text-gray-500">
+                        Read more
+                    </span>
+                    <div className="flex space-x-2">
+                        <button className="text-gray-400 hover:text-red-500 transition-colors">
+                            ♥
+                        </button>
+                        <button className="text-gray-400 hover:text-blue-500 transition-colors">
+                            💬
+                        </button>
+                        <button className="text-gray-400 hover:text-green-500 transition-colors">
+                            🔗
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
 }          

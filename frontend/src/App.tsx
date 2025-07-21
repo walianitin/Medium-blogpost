@@ -1,26 +1,31 @@
 import { BrowserRouter ,Route,Routes} from "react-router-dom"
-import SignIn from "./components/Signup";  // Note the capital S and I
-import SignUp from "./components/Signup";  // Note the capital S and I
-import DashBoard from "./components/pages/DashBoard"
-import Footer from "./components/footer";
-import Home from "./components/HomePage";
-import Write from "./components/pages/Write";
+import SignIn from "./components/SignIn"
+import SignUp from "./components/Signup"
+import DashBoard from "../src/pages/Explore"
+import HomePage from "../src/pages/HomePage"
+import Write from "./pages/Write"
+import Header from "./components/Header"
 function App() {
+
   return (
     <>
+    
     <BrowserRouter>
-   
+    <Header></Header>
       <Routes>
-        <Route path="/" element={<DashBoard />}/>
         <Route path="/signup" element={<SignUp />} />
         <Route path="/signin" element={<SignIn />} />
-        <Route path="/home" element={<DashBoard />} />
-        <Route path="/write" element={<Write/>} />
+        <Route path="/" element={<DashBoard />} />
+        <Route path="/write" element={<Write/>}/>
+        <Route path="/home" element={<HomePage/>}/>
+       
       </Routes>
-      <Footer></Footer>
     </BrowserRouter>
     </>
+
   )
+      
+  
 }
 
 export default App
