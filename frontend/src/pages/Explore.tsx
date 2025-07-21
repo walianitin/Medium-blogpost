@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Content from '../components/Content';
-import Header from '../components/Header';
 import Loader from '../components/Loader';
 
 interface Author {
@@ -50,7 +49,7 @@ export default function DashBoard() {
                 
                 const blogsData = response.data.posts || response.data.blogs || [];
                 setBlogs(Array.isArray(blogsData) ? blogsData : []);
-            } catch (err: any) {
+            } catch (err) {
                 console.error('Error fetching blogs:', err);
                 setError('Failed to load blogs. Please try again.');
                 setBlogs([]);
