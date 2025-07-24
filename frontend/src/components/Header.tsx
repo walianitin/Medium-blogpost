@@ -17,11 +17,11 @@ export default function Header() {
     };
 
     return (
-        <header className="bg-white shadow-md border-b border-gray-200 sticky top-0 z-50">
-            <div className="max-w-6xl mx-auto px-4 py-3">
-                <div className="flex items-center justify-between">
-                    {/* Logo and Brand */}
-                    <div className="flex items-center space-x-4">
+        <div className= "    flex items-center justify-center   ">
+    
+                <div className="flex flex-row items-center  w-full  px-10 justify-between  py-2 rounded-lg" >
+                 
+                    <div className="flex items-center space-x-4  ">
                         <div 
                             className="flex items-center space-x-2 cursor-pointer hover:opacity-80 transition-opacity"
                             onClick={() => navigate('/')}
@@ -36,7 +36,7 @@ export default function Header() {
                     </div>
 
                     {/* Search Bar */}
-                    <div className="hidden md:flex items-center flex-1 max-w-md mx-8">
+                    <div className="hidden md:flex items-center flex-1 max-w-lg mx-8 ">
                         <div className="relative w-full">
                             <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
                             <input
@@ -48,7 +48,7 @@ export default function Header() {
                     </div>
 
                     {/* Right Side Actions */}
-                    <div className="flex items-center space-x-4">
+                    <div className="flex items-center space-x-4 ">
                         {/* Write Button */}
                         <button
                             onClick={handleWriteClick}
@@ -124,7 +124,7 @@ export default function Header() {
                         />
                     </div>
                 </div>
-            </div>
-        </header>
+           
+        </div>
     );
 }

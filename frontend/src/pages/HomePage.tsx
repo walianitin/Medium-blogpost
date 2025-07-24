@@ -1,12 +1,12 @@
 
-import Header from "../components/Header"
+import Hero from "../components/Hero"
+
+import HeaderHome from "../components/HeaderHome"
 export default function Home() {
     return (
-        <div className="flex justify-center h-screen pt-12 bg-[#FFFDF6] ">
-           {} <Header></Header>
-            <div className="w-9/12 h-[77%] bg-[#EAEFEF]  rounded-lg flex items-center justify-center backdrop-blur-sm border border-white/30"> 
-                this will have the animation 
-            </div>
+        <div className="flex flex-col h-screen  bg-gradient-to-b from-white via-blue-100 to to-white ">
+           <HeaderHome></HeaderHome>
+             <Hero/>
         </div>
     )
 }
