@@ -21,7 +21,7 @@ export default function HeaderHome(){
                 {/* Navigation Buttons */}
                 <div className="flex items-center space-x-4">
                     {/* Explore Button */}
-                    <button className="px-4 py-2 text-gray-700 hover:text-blue-600 hover:bg-gray-100 rounded-lg transition-colors duration-200">
+                    <button className="px-4 py-2 text-gray-700 hover:text-blue-600 hover:bg-gray-100 rounded-lg transition-colors duration-200" onClick={()=>Navigate("/explore")}>
                         Explore
                     </button>
 

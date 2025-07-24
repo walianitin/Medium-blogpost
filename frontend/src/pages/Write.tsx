@@ -84,12 +84,13 @@ export default function Write() {
     }
 
     return (<>
-             <Header></Header>
+             <Header token={getAuthHeader() as string}></Header>
         <div className="min-h-screen bg-gradient-to-b from-white via-blue-100 to-white px-4 py-8">
             <div className="max-w-4xl mx-auto bg-white-200 bg-transparent  opacity-90 items-center justify-center mt-20 rounded-md p-10 border-2 border-r-3 border-blue-200 ">
                
                 <div className="mb-4">
-                    <h1 className="text-3xl font-thin text-gray-900 mb-2">Write a New Story</h1>
+                    <h1 className="text-3xl font-thin text-gray-900 mb-2">
+                          New Story</h1>
                     <p className="text-gray-600 font-extralight">Share your thoughts with the world</p>
                 </div>
 

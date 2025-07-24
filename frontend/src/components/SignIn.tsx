@@ -54,7 +54,7 @@ export default function SignIn() {
                             const token = response.data.jwt || response.data.token;
                             if (token) {
                                 localStorage.setItem('authToken', token);
-                                navigate("/");
+                                navigate("/explore");
                             }
                         } catch (error) {
                             console.error(error);
